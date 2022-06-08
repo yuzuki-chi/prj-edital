@@ -1,3 +1,12 @@
+<?php
+use YuzuLib\YuzuLib\DrawCanvas\Canvas;
+
+require_once(__DIR__ . '/../vendor/autoload.php');
+
+$a = new Canvas(100, 300);
+echo $a->drawCanvas();
+
+?>
 <h2>児童向け画面</h2>
 <ul>
     <li>問題一覧画面</li>

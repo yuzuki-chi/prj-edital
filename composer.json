@@ -1,0 +1,16 @@
+{
+    "name": "yuzukichi/edital",
+    "description": "edital",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../yuzulib",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
+    "require": {
+        "yuzulib/yuzulib": "^0.0.1"  
+    }
+}

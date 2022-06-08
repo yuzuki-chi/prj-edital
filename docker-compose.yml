@@ -8,6 +8,7 @@ services:
       - 15001:80
     volumes:
       - ./edital:/var/www/html
+      - ./vendor:/var/www/vendor
 
   editaldb:
     image: mariadb:10.8.3
