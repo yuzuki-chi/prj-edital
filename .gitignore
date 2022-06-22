@@ -9,3 +9,5 @@ phpmyadmin
 
 # PHP Library
 vendor
+
+composer.lock

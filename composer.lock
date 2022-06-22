@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "../yuzulib",
-                "reference": "adbf4b9d88ea03c8783a5258e754f8877d6ccb3e"
+                "reference": "1843a446d476f9517d370aadd751f77d2d0840b8"
             },
             "type": "library",
             "autoload": {
