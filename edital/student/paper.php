@@ -64,6 +64,7 @@ function makeQ ( $index, $question, $id ){
             var ctx". $id ." = cnvs". $id .".getContext('2d');
             // クリックフラグ
             var clickFlg". $id ." = false;
+            var inputData". $id . " = [];
 
             // マウス
             cnvs". $id .".addEventListener('mousedown', draw_start" . $id . ", false);
@@ -83,18 +84,37 @@ function makeQ ( $index, $question, $id ){
                 ctx". $id . ".lineCap = 'round';
                 ctx". $id . ".moveTo(e.offsetX, e.offsetY);
                 ctx". $id . ".stroke();
+                console.log(e.offsetX, e.offsetY);
+                inputData". $id . ".push({
+                    'x': e.offsetX,
+                    'y': e.offsetY,
+                    'status': 'start',
+                    'time': new Date().getTime()
+                });
             }
 
             function draw_move". $id . "(e) {
                 if (clickFlg". $id ." == false) return false;
                 ctx" . $id . ".lineTo(e.offsetX, e.offsetY);
                 ctx" . $id . ".stroke();
+                inputData". $id . ".push({
+                    'x': e.offsetX,
+                    'y': e.offsetY,
+                    'status': 'move'
+                });
             }
 
             function draw_end" . $id . "(e) {
                 clickFlg". $id ." = false;
                 ctx" . $id . ".lineTo(e.offsetX, e.offsetY);
                 ctx" . $id . ".stroke();
+                inputData". $id . ".push({
+                    'x': e.offsetX,
+                    'y': e.offsetY,
+                    'status': 'end'
+                });
+                var json = JSON.stringify(inputData".$id .");
+                console.log(json);
             }
         </script>
     ";
