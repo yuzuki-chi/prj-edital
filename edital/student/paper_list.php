@@ -9,7 +9,7 @@
 <body>
     <h1>問題一覧</h1>
     <ul>
-        <li><a href="/student/paper.php?q=questions">サンプル</a></li>
+        <li><a href="/student/paper.php?q=100">サンプル</a></li>
         <li>かけ算のきまり</li>
         <li>円と球</li>
         <li>あまりのあるわり算</li>
