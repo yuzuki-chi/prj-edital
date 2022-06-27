@@ -6,7 +6,7 @@ use YuzuLib\YuzuLib\DrawCanvas\YuzuCanvas;
 
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
-$questions_data = json_decode(file_get_contents('./' . $_GET['q'] . '.json'), true)[0];
+$questions_data = json_decode(file_get_contents('../input/' . $_GET['q'] . '.json'), true)[0];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -40,7 +40,7 @@ $questions_data = json_decode(file_get_contents('./' . $_GET['q'] . '.json'), tr
                         echo '
                             JSON.stringify(
                                 submitArray.push({
-                                    "id": ' . $question['qId'] . $question_2['qId'] . ', 
+                                    "id": ' . $questions_data['id'] . ', 
                                     "student": 1,
                                     "data": inputData' . $question['qId'] . '_' . $question_2['qId'] . "
                                 })
@@ -52,7 +52,7 @@ $questions_data = json_decode(file_get_contents('./' . $_GET['q'] . '.json'), tr
                 xhr.onload = function(e) {
                     if (xhr.readyState === 4) {
                         if (xhr.status === 200) {
-                            // alert(xhr.responseText);
+                            alert(xhr.responseText);
                             alert('提出しました。');
                         }
                     }

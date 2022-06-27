@@ -9,6 +9,7 @@
 <body>
     <h1>生徒一覧</h1>
     <ul>
+        <li><a href="./paper.php?sid=1&qid=100">サンプル</a></li>
         <li>サンプル 一郎</li>
         <li>サンプル 次郎</li>
         <li>サンプル 三郎</li>
