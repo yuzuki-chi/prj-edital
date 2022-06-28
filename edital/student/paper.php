@@ -83,6 +83,9 @@ $questions_data = json_decode(file_get_contents('../input/' . $_GET['q'] . '.jso
 function makeQ($index, $question, $id)
 {
     $ret = "
+        <br/>
+        <button id='mode_pen_". $id ."'>えんぴつ</button>
+        <button id='mode_erase_". $id ."'>消しゴム</button>
         <div style='position:relative; width:1000px; height:300px; border:solid 1px; padding: 10px;'>
             <div>
                 <div style='font-size: 32px'>(" . $index . ") " . $question . "</div>
@@ -110,13 +113,28 @@ function makeQ($index, $question, $id)
             cnvs" . $id . ".addEventListener('touchstart', draw_start" . $id . ", false);
             cnvs" . $id . ".addEventListener('touchmove', draw_move" . $id . ", false);
             cnvs" . $id . ".addEventListener('touchend', draw_end" . $id . ", false);
+            //鉛筆・消しゴム切り替えボタン
+            ctx" . $id . "_strokeStyle = '#333'
+            var btn_pen_". $id ." = document.getElementById('mode_pen_". $id ."');
+            var btn_erase_". $id ." = document.getElementById('mode_erase_". $id ."');
+            btn_pen_". $id .".addEventListener('click', mode_pen_". $id .", false);
+            btn_erase_". $id .".addEventListener('click', mode_erase_". $id .", false);
+
+            function mode_pen_". $id ."(e) {
+                ctx" . $id . "_strokeStyle = '#333';
+            }
+
+            function mode_erase_". $id ."(e) {
+                ctx" . $id . "_strokeStyle = '#FFF';
+            }
 
             function draw_start" . $id . "(e) {
                 clickFlg" . $id . " = true;
                 e.preventDefault();
                 ctx" . $id . ".beginPath();
                 ctx" . $id . ".lineWidth = 2;
-                ctx" . $id . ".strokeStyle = '#333';
+                ctx" . $id . ".strokeStyle = ctx" . $id . "_strokeStyle;
+                console.log(ctx" . $id . "_strokeStyle);
                 ctx" . $id . ".lineCap = 'round';
                 ctx" . $id . ".moveTo(e.offsetX, e.offsetY);
                 ctx" . $id . ".stroke();
