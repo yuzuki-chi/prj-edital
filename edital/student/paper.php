@@ -67,7 +67,7 @@ $questions_data = json_decode(file_get_contents('../input/' . $_GET['q'] . '.jso
                 console.log(submitArray);
             }
         </script>
-        <button onclick="submitPaper()">提出する</button>
+        <button onclick="submitPaper()" style="width:100%; height:100px; margin: 30px auto; font-size: 28px">提出する</button>
     </div>
     <?php
     // $canvas = new YuzuCanvas(500, 500, 'sampleID', 'sampleClass');
