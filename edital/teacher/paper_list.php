@@ -7,15 +7,18 @@
     <title>問題一覧</title>
 </head>
 <body>
+    <?php
+    $papers_data = json_decode(file_get_contents('../input/papers_data.json'), true);
+    ?>
     <h1>問題一覧</h1>
     <ul>
-        <li>かけ算のきまり</li>
-        <li>円と球</li>
-        <li>あまりのあるわり算</li>
-        <li>少数の引き算</li>
-        <li>三角形と四角形</li>
-        <li>2けたのかけ算</li>
-        <li>かけ算の筆算</li>
+        <?php
+        foreach( $papers_data as $paper ) {
+            echo "<a href='student_list.php?q=". $paper['id'] ."'>
+                    <li>". $paper['title'] ."</li>
+                </a>";
+        }
+        ?>
     </ul>
 </body>
 </html>

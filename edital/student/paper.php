@@ -41,7 +41,7 @@ $questions_data = json_decode(file_get_contents('../input/' . $_GET['q'] . '.jso
                             JSON.stringify(
                                 submitArray.push({
                                     "id": ' . $questions_data['id'] . ', 
-                                    "student": 1,
+                                    "student": '. $_GET['sid'] .',
                                     "data": inputData' . $question['qId'] . '_' . $question_2['qId'] . "
                                 })
                             );";
@@ -52,8 +52,9 @@ $questions_data = json_decode(file_get_contents('../input/' . $_GET['q'] . '.jso
                 xhr.onload = function(e) {
                     if (xhr.readyState === 4) {
                         if (xhr.status === 200) {
-                            alert(xhr.responseText);
-                            alert('提出しました。');
+                            // alert(xhr.responseText);
+                            alert('提出しました。最初の画面に戻ります。');
+                            window.location.href = '/';
                         }
                     }
                 };
@@ -69,11 +70,11 @@ $questions_data = json_decode(file_get_contents('../input/' . $_GET['q'] . '.jso
         <button onclick="submitPaper()">提出する</button>
     </div>
     <?php
-    $canvas = new YuzuCanvas(500, 500, 'sampleID', 'sampleClass');
-    echo $canvas->to_string();
+    // $canvas = new YuzuCanvas(500, 500, 'sampleID', 'sampleClass');
+    // echo $canvas->to_string();
 
-    $canvas = new YuzuCanvas(500, 500, 'secondID', 'sampleClass');
-    echo $canvas->to_string();
+    // $canvas = new YuzuCanvas(500, 500, 'secondID', 'sampleClass');
+    // echo $canvas->to_string();
     ?>
 </body>
 
