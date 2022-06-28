@@ -34,6 +34,10 @@ $answers_data = json_decode(file_get_contents('../output/' . $_GET['sid'] . '_' 
             echo "<h3>【" . $question['qId'] . "】 " . $question['q'] . "</h3>";
             foreach ($question['qs'] as $question_2) {
                 echo makeQ($question_2['qId'], $question_2['q'], $question['qId'] . '_' . $question_2['qId']);
+                
+                //スライダーの最大値をそれぞれのストローク数に変更
+                echo "<script> document.getElementById('stroked_" . $question['qId'] . '_' . $question_2['qId'] . "').max=". (count($answers_data[$cnt]['data'])) ."; </script>";
+
                 echo drawA($answers_data[$cnt], $question['qId'] . '_' . $question_2['qId']);
                 $cnt++;
             }
@@ -57,7 +61,8 @@ function makeQ($index, $question, $id)
             </div>
             <canvas id='canvas_" . $id . "' width='1000' height='300' style='position:absolute; left:0; top:0;'>
             </canvas>
-        </div>
+            </div>
+            <input type='range' id='stroked_". $id ."' min='0' max='100' value='0' style='width:100%; margin-top:30px; margin-bottom:50px;'>
 
         <script>
             // canvas
@@ -68,13 +73,13 @@ function makeQ($index, $question, $id)
             var inputData" . $id . " = [];
 
             // マウス
-            cnvs" . $id . ".addEventListener('mousedown', draw_start" . $id . ", false);
-            cnvs" . $id . ".addEventListener('mousemove', draw_move" . $id . ", false);
-            cnvs" . $id . ".addEventListener('mouseup', draw_end" . $id . ", false);
+            // cnvs" . $id . ".addEventListener('mousedown', draw_start" . $id . ", false);
+            // cnvs" . $id . ".addEventListener('mousemove', draw_move" . $id . ", false);
+            // cnvs" . $id . ".addEventListener('mouseup', draw_end" . $id . ", false);
             // スマホ・タブレット
-            cnvs" . $id . ".addEventListener('touchstart', draw_start" . $id . ", false);
-            cnvs" . $id . ".addEventListener('touchmove', draw_move" . $id . ", false);
-            cnvs" . $id . ".addEventListener('touchend', draw_end" . $id . ", false);
+            // cnvs" . $id . ".addEventListener('touchstart', draw_start" . $id . ", false);
+            // cnvs" . $id . ".addEventListener('touchmove', draw_move" . $id . ", false);
+            // cnvs" . $id . ".addEventListener('touchend', draw_end" . $id . ", false);
 
             function draw_start" . $id . "(e) {
                 clickFlg" . $id . " = true;
@@ -117,35 +122,73 @@ function makeQ($index, $question, $id)
                 var json = JSON.stringify(inputData" . $id . ");
                 console.log(json); 
             }
+
+
         </script>
     ";
     return $ret;
 }
 
-function drawA($answers_data, $id) {
+function drawA($answers_data, $id)
+{
+    $stroke_count = count($answers_data['data']); //ストローク数
+
+    for ($i=0 ; $i<$stroke_count; $i++) {
+        drawStroke($answers_data, $id, $i);
+    }
+
+    //ストロークを直接レンジから変更できるようにする
+    echo "
+    <script>
+    function change_stroke". $id ." (e) {
+        ctx". $id .".clearRect(0, 0, 1000, 300);
+        stroke_value = stroked_". $id .".value;
+        for(let i=0; i<stroke_value; i++) {
+            if( ans_stroke".$id."[i].status == 'start' ) ctx" . $id . ".beginPath();
+            if( ans_stroke".$id."[i].mode == 'pen' ) ctx" . $id . ".strokeStyle = '#333';
+            else if( ans_stroke".$id."[i].mode == 'erase' ) ctx" . $id . ".strokeStyle = '#FFF';
+            ctx" . $id . ".stroke();
+            ctx" . $id . ".lineTo( ans_stroke".$id."[i].x ,  ans_stroke".$id."[i].y );
+        }
+        // alert('".$id."');
+    }
+    //レンジで変化させたい
+    var range". $id . " = document.getElementById('stroked_". $id ."');
+    range". $id . ".addEventListener('change', change_stroke". $id .", false);
+    </script>
+    ";
+}
+
+function drawStroke($ans_data, $id, $index)
+{
     $ret = "<script>";
 
-    foreach( $answers_data['data'] as $index => $data ) {
-        //TODO: status が startの時が始点, stopの時に終点になるように修正
-        switch( $data['status'] ) {
-            case 'start':
-                //意味ないことしてる
-                $next_data = $answers_data['data'][$index+1];
-                $ret = $ret . "
+    $data = $ans_data['data'][$index];
+    echo "<script> var ans_stroke". $id ." = ". json_encode($ans_data['data'], true) ."</script>";
+
+
+    switch ($data['status']) {
+        case 'start':
+            //消しゴム判定
+            if ($data['mode'] == 'pen') $ret = $ret . "ctx" . $id . ".strokeStyle = '#333';";
+            elseif ($data['mode'] == 'erase') $ret = $ret . "ctx" . $id . ".strokeStyle = '#FFF';";
+
+            //意味ないことしてる
+            $next_data = $ans_data['data'][$index + 1];
+            $ret = $ret . "
                     ctx" . $id . ".beginPath();
                     ctx" . $id . ".stroke();
-                    ctx" . $id . ".lineTo(". $next_data['x'] .", ". $next_data['y'] .");
+                    ctx" . $id . ".lineTo(" . $next_data['x'] . ", " . $next_data['y'] . ");
                 ";
-                break;
-            case 'stop':
-            default:
-        }
+            break;
+        case 'stop':
+        default:
 
-        $ret = $ret . "
+            $ret = $ret . "
             ctx" . $id . ".stroke();
-            ctx" . $id . ".lineTo(". $data['x'] .", ". $data['y'] .");
+            ctx" . $id . ".lineTo(" . $data['x'] . ", " . $data['y'] . ");
         ";
     }
     $ret = $ret . "</script>";
-    return $ret;
+    echo $ret;
 }

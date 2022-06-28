@@ -11,3 +11,6 @@ phpmyadmin
 vendor
 
 composer.lock
+
+edital/input/users_data.json
+edital/input/papers_data.json
