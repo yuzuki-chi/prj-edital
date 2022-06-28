@@ -83,6 +83,9 @@ $questions_data = json_decode(file_get_contents('../input/' . $_GET['q'] . '.jso
 function makeQ($index, $question, $id)
 {
     $ret = "
+        <br/>
+        <button id='mode_pen_". $id ."'>えんぴつ</button>
+        <button id='mode_erase_". $id ."'>消しゴム</button>
         <div style='position:relative; width:1000px; height:300px; border:solid 1px; padding: 10px;'>
             <div>
                 <div style='font-size: 32px'>(" . $index . ") " . $question . "</div>
@@ -107,16 +110,33 @@ function makeQ($index, $question, $id)
             cnvs" . $id . ".addEventListener('mousemove', draw_move" . $id . ", false);
             cnvs" . $id . ".addEventListener('mouseup', draw_end" . $id . ", false);
             // スマホ・タブレット
-            cnvs" . $id . ".addEventListener('touchstart', draw_start" . $id . ", false);
-            cnvs" . $id . ".addEventListener('touchmove', draw_move" . $id . ", false);
-            cnvs" . $id . ".addEventListener('touchend', draw_end" . $id . ", false);
+            cnvs" . $id . ".addEventListener('touchstart', touch_start" . $id . ", false);
+            cnvs" . $id . ".addEventListener('touchmove', touch_move" . $id . ", false);
+            cnvs" . $id . ".addEventListener('touchend', touch_end" . $id . ", false);
+            //鉛筆・消しゴム切り替えボタン
+            ctx" . $id . "_strokeStyle = '#333'
+            mode" . $id . " = 'pen';
+            var btn_pen_". $id ." = document.getElementById('mode_pen_". $id ."');
+            var btn_erase_". $id ." = document.getElementById('mode_erase_". $id ."');
+            btn_pen_". $id .".addEventListener('click', mode_pen_". $id .", false);
+            btn_erase_". $id .".addEventListener('click', mode_erase_". $id .", false);
+
+            function mode_pen_". $id ."(e) {
+                ctx" . $id . "_strokeStyle = '#333';
+                mode" . $id . " = 'pen';
+            }
+
+            function mode_erase_". $id ."(e) {
+                ctx" . $id . "_strokeStyle = '#FFF';
+                mode" . $id . " = 'erase';
+            }
 
             function draw_start" . $id . "(e) {
                 clickFlg" . $id . " = true;
                 e.preventDefault();
                 ctx" . $id . ".beginPath();
                 ctx" . $id . ".lineWidth = 2;
-                ctx" . $id . ".strokeStyle = '#333';
+                ctx" . $id . ".strokeStyle = ctx" . $id . "_strokeStyle;
                 ctx" . $id . ".lineCap = 'round';
                 ctx" . $id . ".moveTo(e.offsetX, e.offsetY);
                 ctx" . $id . ".stroke();
@@ -125,6 +145,7 @@ function makeQ($index, $question, $id)
                     'x': e.offsetX,
                     'y': e.offsetY,
                     'status': 'start',
+                    'mode': mode". $id .",
                     'time': new Date().getTime()
                 });
             }
@@ -147,6 +168,58 @@ function makeQ($index, $question, $id)
                 inputData" . $id . ".push({
                     'x': e.offsetX,
                     'y': e.offsetY,
+                    'status': 'end'
+                });
+                var json = JSON.stringify(inputData" . $id . ");
+                console.log(json);
+            }
+
+            function touch_start" . $id . "(e) {
+                clickFlg" . $id . " = true;
+                e.preventDefault();
+                var touch_x = e.touches[0].clientX - window.pageXOffset - e.target.getBoundingClientRect().left;
+                var touch_y = e.touches[0].clientY - window.pageYOffset - e.target.getBoundingClientRect().top + 10;
+
+                ctx" . $id . ".beginPath();
+                ctx" . $id . ".lineWidth = 2;
+                ctx" . $id . ".strokeStyle = ctx" . $id . "_strokeStyle;
+                ctx" . $id . ".lineCap = 'round';
+                ctx" . $id . ".moveTo(touch_x, touch_y);
+                ctx" . $id . ".stroke();
+                console.log(e.offsetX, e.offsetY);
+                inputData" . $id . ".push({
+                    'x': touch_x,
+                    'y': touch_y,
+                    'status': 'start',
+                    'mode': mode". $id .",
+                    'time': new Date().getTime()
+                });
+            }
+
+            function touch_move" . $id . "(e) {
+                var touch_x = e.touches[0].clientX - window.pageXOffset - e.target.getBoundingClientRect().left ;
+                var touch_y = e.touches[0].clientY - window.pageYOffset - e.target.getBoundingClientRect().top + 10;
+
+                if (clickFlg" . $id . " == false) return false;
+                ctx" . $id . ".lineTo(touch_x, touch_y);
+                ctx" . $id . ".stroke();
+                inputData" . $id . ".push({
+                    'x': touch_x,
+                    'y': touch_y,
+                    'status': 'move'
+                });
+            }
+
+            function touch_end" . $id . "(e) {
+                var touch_x = e.touches[0].clientX - window.pageXOffset - e.target.getBoundingClientRect().left;
+                var touch_y = e.touches[0].clientY - window.pageYOffset - e.target.getBoundingClientRect().top + 10;
+
+                clickFlg" . $id . " = false;
+                ctx" . $id . ".lineTo(touch_x, touch_y);
+                ctx" . $id . ".stroke();
+                inputData" . $id . ".push({
+                    'x': touch_x,
+                    'y': touch_y,
                     'status': 'end'
                 });
                 var json = JSON.stringify(inputData" . $id . ");
