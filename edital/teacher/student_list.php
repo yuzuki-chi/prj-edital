@@ -14,6 +14,7 @@
     <h1>生徒一覧</h1>
     <ul>
         <?php foreach( $users_data as $user ) {
+            if(!file_exists('../output/'.$user['id'].'_'.$qid.'_answer.json')) continue;
             echo "<li><a href='./paper.php?sid=". $user['id'] ."&qid=". $qid ."'>". $user['name'] ."さん</a></li>";
         }
         ?>
