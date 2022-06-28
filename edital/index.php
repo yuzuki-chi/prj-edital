@@ -15,7 +15,7 @@ require_once(__DIR__ . '/../vendor/autoload.php');
     <h1>Project EDITAL</h1>
 
     <h2>このプロジェクトについて</h2>
-    <p>このプロジェクトは~~です.</p>
+    <p>このプロジェクトでは, 多忙化が進む小学校教諭の業務負担を軽減させるためのICTツールを作成しています. EDITAL(Digitalize of Education)では,  児童の取り組み方や成長する過程を見やすくするための機能を作っています.</p>
 
     <h2>バージョンについて</h2>
     <ul>
