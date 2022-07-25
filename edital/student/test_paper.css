@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    margin-top: -21px;
+}
+
+canvas {
+}
+
+.tools {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    display: flex;
+    flex-direction: row;
+}
+.tools > button {
+    height: 100px;
+    width: 100px;
+    margin: 0;
+}
