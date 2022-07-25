@@ -179,7 +179,7 @@ function makeQ($index, $question, $id)
                 clickFlg" . $id . " = true;
                 e.preventDefault();
                 var touch_x = e.touches[0].clientX - window.pageXOffset - e.target.getBoundingClientRect().left;
-                var touch_y = e.touches[0].clientY - window.pageYOffset - e.target.getBoundingClientRect().top + 10;
+                var touch_y = e.touches[0].clientY - window.pageYOffset - e.target.getBoundingClientRect().top;
 
                 ctx" . $id . ".beginPath();
                 ctx" . $id . ".lineWidth = 2;
@@ -199,7 +199,7 @@ function makeQ($index, $question, $id)
 
             function touch_move" . $id . "(e) {
                 var touch_x = e.touches[0].clientX - window.pageXOffset - e.target.getBoundingClientRect().left ;
-                var touch_y = e.touches[0].clientY - window.pageYOffset - e.target.getBoundingClientRect().top + 10;
+                var touch_y = e.touches[0].clientY - window.pageYOffset - e.target.getBoundingClientRect().top;
 
                 if (clickFlg" . $id . " == false) return false;
                 ctx" . $id . ".lineTo(touch_x, touch_y);
@@ -213,7 +213,7 @@ function makeQ($index, $question, $id)
 
             function touch_end" . $id . "(e) {
                 var touch_x = e.touches[0].clientX - window.pageXOffset - e.target.getBoundingClientRect().left;
-                var touch_y = e.touches[0].clientY - window.pageYOffset - e.target.getBoundingClientRect().top + 10;
+                var touch_y = e.touches[0].clientY - window.pageYOffset - e.target.getBoundingClientRect().top;
 
                 clickFlg" . $id . " = false;
                 ctx" . $id . ".lineTo(touch_x, touch_y);
