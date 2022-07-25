@@ -16,6 +16,12 @@
 </head>
 
 <body id='body'>
+    <script>
+        const student_id = <?= $_GET['sid'] ?>;
+        const test_id = <?= $_GET['q'] ?>;
+        var pen_mode = 1; //えんぴつ
+        var stroke_start, stroke_end;
+    </script>
     <div style='position:relative; height: 100vh;'>
         <h1>学年生：大きな単元名</h1>
         <h2>小さな単元名</h2>

@@ -6,6 +6,8 @@ services:
       context: .
     ports:
       - 15001:80
+    links:
+      - editaldb
     volumes:
       - ./edital:/var/www/html
       - ./vendor:/var/www/vendor
