@@ -1,17 +1,13 @@
 <?php
-
-/**
- * canvasモードを用意し、有効になった時には画面全体に字を書けるようにする。
- */
-?>
-<!DOCTYPE html>
+$assets_src = '/../assets/';
+?><!DOCTYPE html>
 <html lang="ja">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="test_paper.css">
+    <link rel="stylesheet" href="<?= $assets_src . 'css/test_paper.css' ?>">
     <title>キャンバスモードテスト</title>
 </head>
 
@@ -44,7 +40,7 @@
     </div>
 
 
-    <script src="./test_paper.js"></script>
+    <script src="<?= $assets_src . 'js/test_paper.js' ?>"></script>
 </body>
 
 </html>

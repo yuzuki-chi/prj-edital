@@ -1,7 +1,6 @@
 <?php
 require_once(__DIR__ . '/../vendor/autoload.php');
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="ja">
 
 <head>
@@ -20,6 +19,7 @@ require_once(__DIR__ . '/../vendor/autoload.php');
     <h2>バージョンについて</h2>
     <ul>
         <li>v0.0.1 ... 軸となる基本機能のみを実装したもの</li>
+        <li>v0.0.2 ... 使用感アンケートを基に改良したもの</li>
     </ul>
 
     <hr/>
