@@ -3,6 +3,15 @@
  * student/index.php
  * 児童のトップページ
  */
+
+session_start();
+    
+$user = [
+    'id'=>100,
+    'display_name'=>'立石 凌'
+];
+$_SESSION['login_user'] = $user;
+
 ?><!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -12,10 +21,10 @@
     <title>児童トップページ</title>
 </head>
 <body>
-    <p>〇〇君、こんにちは！</p>
+    <p><?= $_SESSION['login_user']['display_name'] ?>さん、こんにちは！</p>
     <ul>
-        <li>テストを受ける</li>
-        <li>成績を見る</li>
+        <li><a href='paper_list.php'>授業を受ける</a></li>
+        <li>成せき を見る</li>
     </ul>
 </body>
 </html>

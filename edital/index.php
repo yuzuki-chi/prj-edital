@@ -1,4 +1,8 @@
 <?php
+/**
+ * index.php
+ * 実験用トップページ. ここから『児童用』『教諭用』に分岐することができる
+ */
 require_once(__DIR__ . '/../vendor/autoload.php');
 ?><!DOCTYPE html>
 <html lang="ja">

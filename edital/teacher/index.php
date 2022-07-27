@@ -3,6 +3,15 @@
  * teacher/index.php
  * 教諭側のトップページ
  */
+
+session_start();
+    
+$user = [
+    'id'=>100,
+    'display_name'=>'立石 凌'
+];
+$_SESSION['login_user'] = $user;
+$login_user = $_SESSION['login_user'];
 ?><!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -12,9 +21,10 @@
     <title>教諭トップページ</title>
 </head>
 <body>
+    <h1><?= $login_user['display_name'] ?>先生、こんにちは！</h1>
     <ul>
-        <li><a href='./paper_list.php'>授業を開始する</a></li>
-        <li><a href='./result_list.php'>取組結果を見る</a></li>
+        <li><a href='./paper_list.php'>授業を行う</a></li>
+        <li><a href='./result_list.php'>取組結果をみる</a></li>
     </ul>
 </body>
 </html>
