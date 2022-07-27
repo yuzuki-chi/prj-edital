@@ -1,4 +1,9 @@
 <?php
+/**
+ * student/paper.php
+ * 児童がテストに解答するための画面
+ */
+
 $assets_src = '/../assets/';
 ?><!DOCTYPE html>
 <html lang="ja">
@@ -34,8 +39,9 @@ $assets_src = '/../assets/';
             <button id='mode_pen'>✏️えんぴつ</button>
             <button id='mode_erase'>🩹消しゴム</button>
             <input type="range" name="mode_range" id="mode_range" min=1 max=100 value=1>
-            <button>答えを入力する</button>
-            <button>提出する</button>
+            <button id='answer'>答えを入力する</button>
+            <button id='submit'>提出する</button>
+            <script src="<?= $assets_src . 'js/submit_button.js' ?>"></script>
         </div>
     </div>
 
