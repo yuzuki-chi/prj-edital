@@ -1,13 +1,91 @@
 <?php
-
 /**
  * student/paper.php
  * 児童がテストに解答するための画面
  */
+
+if (!isset($_GET['qid'])) header('Location: /student/paper_list.php');
+
 session_start();
 $login_user = $_SESSION['login_user'];
 
 $assets_src = '/../assets/';
+
+//TODO
+// ~~~ いずれひとつにまとめてください ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$url = 'http:///192.168.179.60/api/question/id/'.$_GET['qid'];
+
+$header = [
+    // headerに追加したい情報
+    // 例）
+    // “Content-Type: application/json”,
+    // “Accept: application/json”,
+    // “Authorization: Bearer HogeHoge”
+    ];
+$curl=curl_init();
+curl_setopt($curl,CURLOPT_URL, $url);
+curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
+curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+curl_setopt($curl,CURLOPT_SSL_VERIFYPEER, FALSE); // 証明書の検証を無効化
+curl_setopt($curl,CURLOPT_SSL_VERIFYHOST, FALSE); // 証明書の検証を無効化
+curl_setopt($curl,CURLOPT_RETURNTRANSFER, TRUE); // 返り値を文字列に変更
+curl_setopt($curl,CURLOPT_FOLLOWLOCATION, TRUE); // Locationヘッダを追跡
+
+$question= curl_exec($curl);
+
+// エラーハンドリング用
+$errno = curl_errno($curl);
+// コネクションを閉じる
+curl_close($curl);
+
+// エラーハンドリング
+if ($errno !== CURLE_OK) {
+    echo "ERR";
+}
+
+$question = json_decode($question, true);
+
+// var_dump(($question));
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+//student_idの人がアクティブになる
+$url = 'http:///192.168.179.60/api/student/updateState/'. $login_user['id'] . '/1';
+// echo $login_user['id'];
+$params= [
+    'test' => 'test'
+    ];
+    $header = [
+    // headerに追加したい情報
+    // 例）
+    // “Content-Type: application/json”,
+    // “Accept: application/json”,
+    // “Authorization: Bearer HogeHoge”
+    ];
+    $curl=curl_init();
+    curl_setopt($curl,CURLOPT_URL, $url);
+    curl_setopt($curl,CURLOPT_POST, TRUE);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+    curl_setopt($curl,CURLOPT_SSL_VERIFYPEER, FALSE); // 証明書の検証を無効化
+    curl_setopt($curl,CURLOPT_SSL_VERIFYHOST, FALSE); // 証明書の検証を無効化
+    curl_setopt($curl,CURLOPT_RETURNTRANSFER, TRUE); // 返り値を文字列に変更
+    curl_setopt($curl,CURLOPT_FOLLOWLOCATION, TRUE); // Locationヘッダを追跡
+    
+    $output= curl_exec($curl);
+    
+    // エラーハンドリング用
+    $errno = curl_errno($curl);
+    // コネクションを閉じる
+    curl_close($curl);
+    
+    // エラーハンドリング
+    if ($errno !== CURLE_OK) {
+        echo "ERR!";
+    }
+    // echo $output;
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -22,8 +100,8 @@ $assets_src = '/../assets/';
 
 <body>
     <header>
-        <h1>学年生：大きな単元名</h1>
-        <h2>小さな単元名</h2>
+        <h1><?= $question['grade'] ?>年生：<?= $question['title'] ?></h1>
+        <h2><?= $question['subject'] ?></h2>
         <div><?= $login_user['display_name'] ?>さん</div>
     </header>
     <main>
@@ -34,13 +112,11 @@ $assets_src = '/../assets/';
             var stroke_start, stroke_end;
         </script>
         <div style='position:relative; height: 100vh;'>
-            <h3>大問１</h3>
-            <div>
-                <div style='font-size: 32px'>問題文</div>
-                <div>画像とかがあればここにでてくる</div>
-            </div>
-            <div style='font-size: 20px'>式</div>
-            <div style='font-size: 20px'>答え</div>
+
+            <!-- 作成された問題文 -->
+            <?= $question['content'] ?>
+            <!-- 作成された問題文：ここまで -->
+
             <canvas id='canvas' style='position:absolute; left:0; top:0;'>
             </canvas>
         </div>

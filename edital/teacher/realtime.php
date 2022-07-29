@@ -8,6 +8,45 @@ session_start();
 $login_user = $_SESSION['login_user'];
 
 if (!isset($_GET['qid'])) header('Location: /teacher/paper_list.php');
+
+//TODO
+// ~~~ いずれひとつにまとめてください ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$url = 'http:///192.168.179.60/api/student/state/'. '10'; //10はclass_id
+
+$header = [
+    // headerに追加したい情報
+    // 例）
+    // “Content-Type: application/json”,
+    // “Accept: application/json”,
+    // “Authorization: Bearer HogeHoge”
+    ];
+$curl=curl_init();
+curl_setopt($curl,CURLOPT_URL, $url);
+curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
+curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+curl_setopt($curl,CURLOPT_SSL_VERIFYPEER, FALSE); // 証明書の検証を無効化
+curl_setopt($curl,CURLOPT_SSL_VERIFYHOST, FALSE); // 証明書の検証を無効化
+curl_setopt($curl,CURLOPT_RETURNTRANSFER, TRUE); // 返り値を文字列に変更
+curl_setopt($curl,CURLOPT_FOLLOWLOCATION, TRUE); // Locationヘッダを追跡
+
+$active_students = curl_exec($curl);
+
+// エラーハンドリング用
+$errno = curl_errno($curl);
+// コネクションを閉じる
+curl_close($curl);
+
+// エラーハンドリング
+if ($errno !== CURLE_OK) {
+    echo "ERR";
+}
+
+$active_students = json_decode($active_students, true);
+
+// var_dump(($active_students));
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -33,9 +72,14 @@ if (!isset($_GET['qid'])) header('Location: /teacher/paper_list.php');
         <main>
             <h1>テストの進捗</h1>
             <ul>
-                <li>ひとりめ -> １の③</li>
-                <li>ふたりめ -> 2の③</li>
-                <li>さんにんめ -> １の②</li>
+                <?php
+                foreach ($active_students as $student) {
+                    echo "<li>";
+                    echo $student['name'] . " さん";
+                    echo "=> /進捗/user_id";
+                    echo "</li>";
+                }
+                ?>
             </ul>
         </main>
 
@@ -52,9 +96,14 @@ if (!isset($_GET['qid'])) header('Location: /teacher/paper_list.php');
         <main>
             <h1>筆跡の活性マップ</h1>
             <ul>
-                <li>ひとりめ -> 活性レベル1</li>
-                <li>ふたりめ -> 活性レベル3</li>
-                <li>さんにんめ -> 活性レベル5</li>
+            <?php
+                foreach ($active_students as $student) {
+                    echo "<li>";
+                    echo $student['name'] . " さん";
+                    echo "=> /活性/user_id";
+                    echo "</li>";
+                }
+                ?>
             </ul>
         </main>
 

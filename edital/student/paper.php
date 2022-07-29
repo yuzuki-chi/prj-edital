@@ -7,6 +7,7 @@ use YuzuLib\YuzuLib\DrawCanvas\YuzuCanvas;
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
 $questions_data = json_decode(file_get_contents('../input/' . $_GET['q'] . '.json'), true)[0];
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
