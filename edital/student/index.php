@@ -7,8 +7,8 @@
 session_start();
     
 $user = [
-    'id'=>20,
-    'display_name'=>'立石 凌'
+    'id'=>$_GET['sid'],
+    'display_name'=>$_GET['dn']
 ];
 $_SESSION['login_user'] = $user;
 
