@@ -94,15 +94,18 @@ $params= [
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?= $assets_src ?>css/mainpage.css">
     <link rel="stylesheet" href="<?= $assets_src . 'css/test_paper.css' ?>">
     <title>キャンバスモードテスト</title>
 </head>
 
 <body>
     <header>
-        <h1><?= $question['grade'] ?>年生：<?= $question['title'] ?></h1>
-        <h2><?= $question['subject'] ?></h2>
-        <div><?= $login_user['display_name'] ?>さん</div>
+        <div class="title">
+            <h1><?= $question['grade'] ?>年生：<?= $question['title'] ?></h1>
+            <h2><?= $question['subject'] ?></h2>
+        </div>
+        <div class="name"><?= $login_user['display_name'] ?>さん</div>
     </header>
     <main>
         <script>
@@ -111,15 +114,20 @@ $params= [
             var pen_mode = 1; //えんぴつ
             var stroke_start, stroke_end;
         </script>
-        <div style='position:relative; height: 100vh;'>
 
-            <!-- 作成された問題文 -->
-            <?= $question['content'] ?>
-            <!-- 作成された問題文：ここまで -->
-
-            <canvas id='canvas' style='position:absolute; left:0; top:0;'>
-            </canvas>
+        <!-- 白背景で、実際に描けるスペース -->
+        <div class="whitepaper" id="whitepaper">
+            <div style='position:relative; padding:30px;'>
+    
+                <!-- 作成された問題文 -->
+                <?= $question['content'] ?>
+                <!-- 作成された問題文：ここまで -->
+    
+                <canvas id='canvas' style='position:absolute; left:0; top:0;'>
+                </canvas>
+            </div>
         </div>
+
     </main>
     <footer>
         <div class='answer_box'>

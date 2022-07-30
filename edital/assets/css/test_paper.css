@@ -12,12 +12,19 @@ canvas {
     position: absolute;
     bottom: 0;
     left: 0;
+    right: 0;
 
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 .tools > button {
     height: 100px;
-    width: 100px;
+    width: 150px;
     margin: 0;
+
+}
+
+.answer_box {
+    display: none;
 }

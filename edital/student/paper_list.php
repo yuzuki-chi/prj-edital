@@ -6,6 +6,9 @@
  */
 session_start();
 $login_user = $_SESSION['login_user'];
+
+$assets_src = '/../assets/';
+
 $papers_data = [
     [
         'id' => '101',
@@ -72,27 +75,30 @@ $header = [
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?= $assets_src ?>css/mainpage.css">
     <title>授業をうける</title>
 </head>
 
 <body>
     <header>
-        <div>戻る</div>
+        <div><a href="index.php" style="color:#FCDBC3">＜ 戻る</a></div>
         <div><?= $login_user['display_name'] ?>さん</div>
     </header>
 
     <main>
-        <div>7月28日 木よう日</div>
-        <ul>
-            <?php
-            foreach ($question_list as $question) {
-                echo "<a href='/student/test_paper.php?qid=" . $question['id'] . "'>
-                    <li>" . $question['title'] . "</li>
-                </a>";
-            }
-            ?>
-        </ul>
-        <div>ほかの授業をうける</div>
+        <div class="content_box">
+            <p>7月31日 日よう日</p>
+            <ul>
+                <?php
+                foreach ($question_list as $question) {
+                    echo "<a href='/student/test_paper.php?qid=" . $question['id'] . "'>
+                        <li>" . $question['title'] . "</li>
+                    </a>";
+                }
+                ?>
+            </ul>
+            <!-- <div>ほかの授業をうける</div> -->
+        </div>
 
     </main>
 

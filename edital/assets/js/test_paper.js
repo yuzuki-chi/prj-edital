@@ -1,7 +1,10 @@
 // Initialized canvas
 const cnvs = document.getElementById('canvas');
-cnvs.width = window.outerWidth;
-cnvs.height = window.innerHeight;
+const wp = document.getElementById('whitepaper');
+// cnvs.width = window.outerWidth;
+// cnvs.height = window.innerHeight;
+cnvs.width = wp.clientWidth;
+cnvs.height = wp.clientHeight;
 
 /* 
  * TODO: 

@@ -1,0 +1,48 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+body {
+    margin: 0;
+    padding: 0;
+
+    color: #FCDBC3;
+    font-size: 30px;
+}
+a {
+    color: #FCDBC3;
+    text-decoration: none;
+}
+li {
+    list-style: none;
+}
+p {
+    margin: 0;
+}
+header {
+    background-color: #396AB1;
+    height: 70vh;
+}
+
+main {
+    background-color: #FCDBC3;
+    height: 15vh;
+}
+
+footer {
+    background-color: #77C8D0;
+    height: 15vh;
+}
+
+.content_box {
+    text-align: center;
+}
+.content_box > p {
+    padding-top: 20vh;
+}
+.content_box > ul {
+    padding-top: 5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

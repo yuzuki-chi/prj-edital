@@ -1,0 +1,94 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+body {
+    margin: 0;
+    padding: 0;
+
+    color: #396AB1;
+    font-size: 30px;
+}
+a {
+    color: #396AB1;
+    text-decoration: none;
+}
+li {
+    list-style: none;
+}
+p {
+    margin: 0;
+}
+h1 {
+    margin: 0;
+    font-size: 30px;
+}
+h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+/** header */
+header {
+    color: #FCDBC3;
+    background-color: #396AB1;
+    height: 10vh;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.title {
+    padding-left: 30px;
+}
+.title > h1 {
+    font-size: 24px;
+}
+.title > h2 {
+    font-size: 18px;
+}
+
+main {
+    background-color: #FCDBC3;
+    height: 75vh;
+    padding: 20px;
+}
+
+footer {
+    background-color: #77C8D0;
+    height: 15vh;
+}
+
+.content_box {
+    text-align: center;
+}
+.content_box > p {
+    padding-top: 10vh;
+}
+.content_box > ul {
+    padding-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.progress_map {
+    background-color: white;
+    width: 95vw;
+    height: 90%;
+    margin: auto;
+}
+.progress_map > ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.progress_map > ul > li {
+    width: 150px;
+    height: 100px;
+    margin-right: 30px;
+    margin-bottom: 20px;
+    border: 1px solid black;
+}

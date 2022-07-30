@@ -7,6 +7,7 @@
 
 session_start();
 $login_user = $_SESSION['login_user'];
+$assets_src = '/../assets/';
 
 if (!isset($_GET['qid'])) header('Location: /teacher/paper_list.php');
 
@@ -52,6 +53,7 @@ $active_students = json_decode($active_students, true);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?= $assets_src ?>css/realtime.css">
     <title>授業中の画面</title>
 </head>
 
@@ -62,20 +64,28 @@ $active_students = json_decode($active_students, true);
     </script>
 
     <header>
-        <div>戻る</div>
+        <div><a href="index.php" style="color:#FCDBC3">＜ 戻る</a></div>
         <div>テストの進捗</div>
     </header>
 
     <main>
-        <ul>
-            <li><a href="realtime_progress.php?qid=<?= $_GET['qid'] ?>">進捗マップ</a></li>
-            <li><a href="realtime_active.php?qid=<?= $_GET['qid'] ?>">活性マップ</a></li>
-        </ul>
+        <div class="progress_map">
+            <h1>テストの進捗</h1>
+            <ul>
+                <?php
+                foreach ($active_students as $student) {
+                    echo "<li>";
+                    echo $student['name'] . " さん";
+                    // echo "=> /進捗/user_id";
+                    echo "</li>";
+                }
+                ?>
+            </ul>
+        </div>
     </main>
 
     <footer>
     </footer>
-
 
     <script src="realtime.js"></script>
 </body>
