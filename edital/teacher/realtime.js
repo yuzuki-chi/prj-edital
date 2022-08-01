@@ -52,7 +52,8 @@ setInterval(() => {
                          * TODO 
                          * 今は数値を出力しているが、本当は色を変更したい
                          */
-                        document.getElementsByTagName('li')[i].textContent = diff[i].diff;
+                        // document.getElementsByTagName('li')[i].textContent = ""+diff[i].diff;
+                        document.getElementsByTagName('li')[i].children[1].textContent = diff[i].diff + " 秒"
 
                         if (diff[i].diff <= 15) {
                             h = diff[i].diff

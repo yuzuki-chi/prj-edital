@@ -10,42 +10,17 @@ $login_user = $_SESSION['login_user'];
 
 if (!isset($_GET['qid'])) header('Location: /teacher/paper_list.php');
 
-//TODO
-// ~~~ いずれひとつにまとめてください ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$url = 'http:///192.168.179.60/api/student/state/' . '10'; //10はclass_id
+require_once('../lib/curl.php');
 
-$header = [
-    // headerに追加したい情報
-    // 例）
-    // “Content-Type: application/json”,
-    // “Accept: application/json”,
-    // “Authorization: Bearer HogeHoge”
-];
-$curl = curl_init();
-curl_setopt($curl, CURLOPT_URL, $url);
-curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
-curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
-curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE); // 証明書の検証を無効化
-curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE); // 証明書の検証を無効化
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE); // 返り値を文字列に変更
-curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE); // Locationヘッダを追跡
-
-$active_students = curl_exec($curl);
-$errno = curl_errno($curl);
-curl_close($curl);
-
-if ($errno !== CURLE_OK) {
-    echo "ERR";
+/** クラスIDから, アクティブな生徒を取得する */
+$url = 'http:///192.168.179.60/api/student/state/' . '1'; //1はclass_id
+$ret = curl_get($url);
+if( $ret != false ) {
+    $active_students = json_decode($active_students, true);
 }
+/** ---------------------------------- */
 
-$active_students = json_decode($active_students, true);
-
-// var_dump(($active_students));
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="ja">
 
 <head>

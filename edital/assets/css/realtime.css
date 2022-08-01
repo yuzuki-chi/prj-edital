@@ -91,4 +91,11 @@ footer {
     margin-right: 30px;
     margin-bottom: 20px;
     border: 1px solid black;
+
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+}
+.progress_map > ul > li > div {
+    text-align: center;
 }

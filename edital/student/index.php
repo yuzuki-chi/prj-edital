@@ -5,12 +5,23 @@
  */
 
 session_start();
-    
-$user = [
-    'id'=>$_GET['sid'],
-    'display_name'=>$_GET['dn']
-];
-$_SESSION['login_user'] = $user;
+// if( !( isset($_SESSION['login_user']['id']) && isset($_SESSION['login_user']['display_name']) )) {
+    if( isset($_GET['sid']) && isset($_GET['dn']))
+    {
+        $user = [
+            'id'=>$_GET['sid'],
+            'display_name'=>$_GET['dn']
+        ];
+        $_SESSION['login_user'] = $user;    
+    } else {
+        print("
+        <script>
+            alert('児童の情報を入力し直してください.'); 
+            document.location = '/';
+        </script>
+        ");
+    }
+// }
 
 
 $assets_src = '/../assets/';
